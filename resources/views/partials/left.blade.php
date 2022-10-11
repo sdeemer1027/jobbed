@@ -9,7 +9,7 @@
     <img src="images/evets-logo.png" class="img-thumbnail rounded-circle" alt="Cinque Terre" width="100">
    --}}
     @if($u->profilepic)
-    <img src="{{ asset("storage/$u->profilepic") }}" class="img-thumbnail rounded-circle" alt="Steve" width="100"><br/>
+    <img src="{{ asset("$u->profilepic") }}" class="img-thumbnail rounded-circle" alt="Steve" width="100"><br/>
     @else
     <img src="images/evets-logo.png" class="img-thumbnail rounded-circle" alt="default" width="100">
     @endif

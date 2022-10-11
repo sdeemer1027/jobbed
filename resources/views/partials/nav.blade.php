@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
-    <a class="navbar-brand" href="#"><!--SRD-->{{-- trans('panel.site_title') --}}Dr.Steve</a>
+    <a class="navbar-brand" href="#">Steven.News</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -11,12 +11,13 @@
                         <i class="fas fa-home fa-xs"></i> Home </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('home') }}"><img src="/images/evets-logo.png" height="25px;" alt="evets.pet"> Home</a>
-                        <a class="dropdown-item" href="{{route('contactus')}}">Contact</a>
+                        <a class="dropdown-item" href="{{route('contactus')}}"><i class="far fa-address-book  fa-2x"></i>Contact</a>
                         <a class="dropdown-item" href="{{route('aboutus')}}"><img src="/a1.jpg" height="25px;" alt="evets.pet"> About</a>
                     </div>
                 </div>
             </li>
 
+<!--
             <li class="nav-item">
                 <div class="dropdown">
                     <button type="button" class="btn  nav-link dropdown-toggle" data-toggle="dropdown">
@@ -34,6 +35,7 @@
                 </div>
 
             </li>
+-->
             <li class="nav-item">
                 <div class="dropdown">
                     <button type="button" class="btn nav-link dropdown-toggle" data-toggle="dropdown">
@@ -41,8 +43,10 @@
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item"  href="{{route('weather')}}"> Weather</a>
+                        <!--
                         <a class="dropdown-item"  href="#"><i class="fab fa-android" style='color:#000000'></i> Android</a>
                         <a class="dropdown-item"  href="#"><i class="fas fa-database" style='color:#000000'></i> Database</a>
+-->
                         <a class="dropdown-item"  href="#"><i class="fab fa-php" style='color:#000000'></i> PHP</a>
                         <a class="dropdown-item"  href="#"><i class="fab fa-css3" style='color:#000000'></i> CSS</a>
                         <!--
@@ -62,6 +66,7 @@
                 </div>
 
             </li>   -->
+<!-- 
             <li class="nav-item">
                 <div class="dropdown">
                     <button type="button" class="btn nav-link dropdown-toggle" data-toggle="dropdown">
@@ -72,11 +77,11 @@
                         <a class="dropdown-item" href="#"><i class="fas fa-database" style='color:#000000'></i> evetS.pet</a>
                         <a class="dropdown-item" href="#"><i class="fab fa-php" style='color:#000000'></i> pcwizard.club</a>
                         <a class="dropdown-item" href="#"><i class="fab fa-css3" style='color:#000000'></i> http://www.stevedeemer.com/</a>
-                        <!--
-                        <a class="dropdown-item" href="#">Link 3</a>-->
+                       
                     </div>
                 </div>
             </li>
+-->
 
 <li  class="nav-item">
             @guest

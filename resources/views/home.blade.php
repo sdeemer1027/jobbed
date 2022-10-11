@@ -37,11 +37,11 @@
 
 @foreach($uare as $u)
 {{--$u->name--}}
-
+<img src="{{ asset("$u->profilepic") }}" class="img-thumbnail" alt="{{$u->name}}" width="100">
 @endforeach
 @foreach($mypics as $mypic)
 @if($mypic->pic)
- <img src="{{ asset("storage/$mypic->pic") }}" class="img-thumbnail" alt="{{$u->name}}" width="100">
+ <img src="{{ asset("/$mypic->pic") }}" class="img-thumbnail" alt="{{$u->name}}" width="100">
  @else
     Sorry you have no additional Photos<br/>
     @endif
@@ -53,6 +53,8 @@
                         <div class="row">
         @if(auth()->id() =='1')
 
+
+
  @foreach($users as $user)
 {{--dd($user)--}}
 
@@ -60,8 +62,11 @@
 <a href="user/profile/{{$user->id}}">
         <h5>{{$user->name}}</h5>
     @if($user->profilepic)
-         <img src="{{ asset("storage/$user->profilepic") }}" width="50px;" class="img-circle"><br/>
+         <img src="{{ asset("$user->profilepic") }}" width="50px;" class="img-circle"><br/>
          {{--$user->email--}}
+
+
+
     @endif
      </a>
      </div>

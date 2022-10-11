@@ -8,7 +8,7 @@
             <a class="dropdown-item" href="{{ route('home') }}"><i class="fas fa-home fa-xs" style='color:#000000'></i> Home</a><HR>
             @guest
                 @if (Route::has('login'))
-                    <i class="fas fa-sign-in-alt" style='color:#000000'></i>        <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+             <a class="dropdown-item" href="{{ route('login') }}"><i class="fas fa-sign-in-alt" style='color:#000000'></i> {{ __('Login') }}</a>
                 @endif
                 @if (Route::has('register'))
                         <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
@@ -28,19 +28,8 @@
         @endguest
 
 
-            <!--
-            <a class="dropdown-item" href="nba/">      <i class="fas fa-basketball-ball"></i>  NBA</a><HR>
--->
             <HR>
-            <a class="dropdown-item"  href="#"><i class="fas fa-database" style='color:#000000'></i> Database</a>
-            <a class="dropdown-item"  href="{{route('recipe')}}"><i class="fas fa-utensils" style='color:#000000'></i> Food</a>
-            <a class="dropdown-item"  href="#"><i class="fab fa-adobe" style='color:#000000'></i> PhotoShop</a>
-            <a class="dropdown-item"  href="#"><i class="fas fa-video" style='color:#000000'></i> Videos</a>
-            <a class="dropdown-item"  href="#"><i class="fas fa-camera" style='color:#000000'></i> Photography</a>
-            <a class="dropdown-item"  href="{{route('pencil')}}"><i class="fas fa-pencil-alt" style='color:#000000'></i> Pencil Art</a>
-            <a class="dropdown-item"  href="#"><i class="fas fa-music" style='color:#000000'></i> Music</a>
-            <a class="dropdown-item"  href="#"><i class="fas fa-feather-alt" style='color:#000000'></i> Writing</a>
-
+           
 
         </div>
     </div>
