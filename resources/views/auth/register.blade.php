@@ -61,6 +61,43 @@
                             </div>
                         </div>
 
+                        <hr/>
+{{--
+                        <div class="row mb-3">
+                            <label for="profile_name" class="col-md-4 col-form-label text-md-end">Profile Name</label>
+                            <div class="col-md-6">
+                                <input id="profile_name" type="text" class="form-control" name="profile_name" value=""  autofocus>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="first_name" class="col-md-4 col-form-label text-md-end">First Name</label>
+                            <div class="col-md-6">
+                                <input id="first_name" type="text" class="form-control" name="first_name" value=""  autofocus>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="last_name" class="col-md-4 col-form-label text-md-end">Last Name</label>
+                            <div class="col-md-6">
+                                <input id="last_name" type="text" class="form-control" name="last_name" value=""  autofocus>
+                            </div>
+                        </div>
+--}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

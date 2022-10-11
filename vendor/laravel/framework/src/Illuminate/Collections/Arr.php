@@ -25,7 +25,7 @@ class Arr
      * Add an element to an array using "dot" notation if it doesn't exist.
      *
      * @param  array  $array
-     * @param  string  $key
+     * @param  string|int|float  $key
      * @param  mixed  $value
      * @return array
      */
@@ -142,7 +142,7 @@ class Arr
      * Get all of the given array except for a specified array of keys.
      *
      * @param  array  $array
-     * @param  array|string  $keys
+     * @param  array|string|int|float  $keys
      * @return array
      */
     public static function except($array, $keys)
@@ -167,6 +167,10 @@ class Arr
 
         if ($array instanceof ArrayAccess) {
             return $array->offsetExists($key);
+        }
+
+        if (is_float($key)) {
+            $key = (string) $key;
         }
 
         return array_key_exists($key, $array);
@@ -252,7 +256,7 @@ class Arr
      * Remove one or many array items from a given array using "dot" notation.
      *
      * @param  array  $array
-     * @param  array|string  $keys
+     * @param  array|string|int|float  $keys
      * @return void
      */
     public static function forget(&$array, $keys)
@@ -314,7 +318,7 @@ class Arr
             return $array[$key];
         }
 
-        if (strpos($key, '.') === false) {
+        if (! str_contains($key, '.')) {
             return $array[$key] ?? value($default);
         }
 
@@ -424,6 +428,18 @@ class Arr
     }
 
     /**
+     * Key an associative array by a field or using a callback.
+     *
+     * @param  array  $array
+     * @param  callable|array|string
+     * @return array
+     */
+    public static function keyBy($array, $keyBy)
+    {
+        return Collection::make($array)->keyBy($keyBy)->all();
+    }
+
+    /**
      * Get a subset of the items from the given array.
      *
      * @param  array  $array
@@ -510,7 +526,7 @@ class Arr
      * Get a value from the array, and remove it.
      *
      * @param  array  $array
-     * @param  string|int  $key
+     * @param  string  $key
      * @param  mixed  $default
      * @return mixed
      */
@@ -587,7 +603,7 @@ class Arr
      * If no key is given to the method, the entire array will be replaced.
      *
      * @param  array  $array
-     * @param  string|null  $key
+     * @param  string|int|null  $key
      * @param  mixed  $value
      * @return array
      */

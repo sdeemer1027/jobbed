@@ -26,7 +26,7 @@ class HandleExceptions
      *
      * @var \Illuminate\Contracts\Foundation\Application
      */
-    protected $app;
+    protected static $app;
 
     /**
      * Bootstrap the given application.
@@ -36,17 +36,17 @@ class HandleExceptions
      */
     public function bootstrap(Application $app)
     {
-        self::$reservedMemory = str_repeat('x', 32768);
+        self::$reservedMemory = str_repeat('x', 10240);
 
-        $this->app = $app;
+        static::$app = $app;
 
         error_reporting(-1);
 
-        set_error_handler([$this, 'handleError']);
+        set_error_handler($this->forwardsTo('handleError'));
 
-        set_exception_handler([$this, 'handleException']);
+        set_exception_handler($this->forwardsTo('handleException'));
 
-        register_shutdown_function([$this, 'handleShutdown']);
+        register_shutdown_function($this->forwardsTo('handleShutdown'));
 
         if (! $app->environment('testing')) {
             ini_set('display_errors', 'Off');
@@ -87,14 +87,14 @@ class HandleExceptions
     public function handleDeprecation($message, $file, $line)
     {
         if (! class_exists(LogManager::class)
-            || ! $this->app->hasBeenBootstrapped()
-            || $this->app->runningUnitTests()
+            || ! static::$app->hasBeenBootstrapped()
+            || static::$app->runningUnitTests()
         ) {
             return;
         }
 
         try {
-            $logger = $this->app->make(LogManager::class);
+            $logger = static::$app->make(LogManager::class);
         } catch (Exception $e) {
             return;
         }
@@ -115,7 +115,7 @@ class HandleExceptions
      */
     protected function ensureDeprecationLoggerIsConfigured()
     {
-        with($this->app['config'], function ($config) {
+        with(static::$app['config'], function ($config) {
             if ($config->get('logging.channels.deprecations')) {
                 return;
             }
@@ -135,7 +135,7 @@ class HandleExceptions
      */
     protected function ensureNullLogDriverIsConfigured()
     {
-        with($this->app['config'], function ($config) {
+        with(static::$app['config'], function ($config) {
             if ($config->get('logging.channels.null')) {
                 return;
             }
@@ -159,15 +159,15 @@ class HandleExceptions
      */
     public function handleException(Throwable $e)
     {
-        self::$reservedMemory = null;
-
         try {
+            self::$reservedMemory = null;
+
             $this->getExceptionHandler()->report($e);
         } catch (Exception $e) {
             //
         }
 
-        if ($this->app->runningInConsole()) {
+        if (static::$app->runningInConsole()) {
             $this->renderForConsole($e);
         } else {
             $this->renderHttpResponse($e);
@@ -193,7 +193,7 @@ class HandleExceptions
      */
     protected function renderHttpResponse(Throwable $e)
     {
-        $this->getExceptionHandler()->render($this->app['request'], $e)->send();
+        $this->getExceptionHandler()->render(static::$app['request'], $e)->send();
     }
 
     /**
@@ -203,8 +203,6 @@ class HandleExceptions
      */
     public function handleShutdown()
     {
-        self::$reservedMemory = null;
-
         if (! is_null($error = error_get_last()) && $this->isFatal($error['type'])) {
             $this->handleException($this->fatalErrorFromPhpError($error, 0));
         }
@@ -220,6 +218,18 @@ class HandleExceptions
     protected function fatalErrorFromPhpError(array $error, $traceOffset = null)
     {
         return new FatalError($error['message'], 0, $error, $traceOffset);
+    }
+
+    /**
+     * Forward a method call to the given method if an application instance exists.
+     *
+     * @return callable
+     */
+    protected function forwardsTo($method)
+    {
+        return fn (...$arguments) => static::$app
+            ? $this->{$method}(...$arguments)
+            : false;
     }
 
     /**
@@ -251,6 +261,16 @@ class HandleExceptions
      */
     protected function getExceptionHandler()
     {
-        return $this->app->make(ExceptionHandler::class);
+        return static::$app->make(ExceptionHandler::class);
+    }
+
+    /**
+     * Clear the local application instance from memory.
+     *
+     * @return void
+     */
+    public static function forgetApp()
+    {
+        static::$app = null;
     }
 }
